@@ -131,6 +131,13 @@ cd open-zwave
 make
 ```
 
+To work with the current CMakeLists.txt you wiil need to do
+
+```
+cd ..
+mv open-zwave/ open-zwave-read-only
+```
+
 ### Tellstick support
 If you need support for Tellstick or Tellstic Duo (http://www.telldus.se/products/range) you need to install telldus-core before compileing. 
 On systems with apt package manger (like ubuntu and Raspbian) telldus-core can be installed by doing the following:
