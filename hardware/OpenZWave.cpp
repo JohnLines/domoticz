@@ -635,6 +635,50 @@ void COpenZWave::OnZWaveNotification(OpenZWave::Notification const* _notificatio
 	case OpenZWave::Notification::Type_Notification:
 	{
 		NodeInfo* nodeInfo = GetNodeInfo(_homeID, _nodeID);
+		if (_nodeID == 255) {
+
+		uint8 subType = _notification->GetNotification();
+			_log.Log(LOG_STATUS, "OpenZWave: Type_Notification from Broadcast Node Subtype %d - controllerID %u", subType, m_controllerID);
+		switch (subType)
+		{
+		case OpenZWave::Notification::Code_MsgComplete:
+		{
+			_log.Log(LOG_STATUS, "OpenZWave: Type_Notification subType Code_MsgComplete");
+		}
+		break;
+		case OpenZWave::Notification::Code_Awake:
+		{
+			_log.Log(LOG_STATUS, "OpenZWave: Type_Notification subType Code_Awake");
+		}
+		break;
+		case OpenZWave::Notification::Code_Sleep:
+		{
+			_log.Log(LOG_STATUS, "OpenZWave: Type_Notification subType Code_Sleep");
+		}
+		break;
+		case OpenZWave::Notification::Code_Dead:
+		{
+			_log.Log(LOG_STATUS, "OpenZWave: Type_Notification subType Code_Dead");
+		}
+		break;
+		case OpenZWave::Notification::Code_Alive:
+		{
+			_log.Log(LOG_STATUS, "OpenZWave: Type_Notification subType Code_Alive");
+		}
+		break;
+		case OpenZWave::Notification::Code_Timeout:
+			//{
+			//	nodeInfo->eState = NSTATE_DEAD;
+			//	ForceUpdateForNodeDevices(m_controllerID, _nodeID);
+			//}
+			_log.Log(LOG_STATUS, "OpenZWave: Received Broadcast timeout notification from HomeID: %u, NodeID: %d (0x%02x)", _homeID, _nodeID, _nodeID);
+			break;
+
+
+                }
+                // For now return if it was a broadcast, which is what we would have done below anyway
+		return; 
+		}
 		if (nodeInfo == NULL)
 		{
 			_log.Log(LOG_ERROR, "OpenZWave: Type_Notification, NodeID not found internally!. HomeID: %u, NodeID: %d (0x%02x)", _homeID, _nodeID, _nodeID);
